@@ -41,6 +41,7 @@
 ![img_2](https://lemon-neko.oss-cn-beijing.aliyuncs.com/img/img_2.png)
 自定义模式可以有多位同类型神民，根据提示输入6个数字，中间用空格或逗号隔开
 ### 加入游戏
+创建者自动加入游戏
 ![img_3](https://lemon-neko.oss-cn-beijing.aliyuncs.com/img/img_3.png)
 ![img_4](https://lemon-neko.oss-cn-beijing.aliyuncs.com/img/img_4.png)
 ### 开始游戏
