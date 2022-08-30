@@ -82,7 +82,7 @@ object GameStart : SimpleCommand(
                     }
 
                     2 -> {
-                        sendMessage("游戏人数过多，请重新开始游戏并控制人数在5~18人")
+                        sendMessage("游戏人数超出限制，请重新开始游戏并控制人数在4~18人")
                     }
 
                     3 -> {

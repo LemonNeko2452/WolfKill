@@ -33,25 +33,25 @@ class ROOMS {
     }
 
     fun build(s: String): Int {
-        val list = s.split(" ", ",")
+        val list = s.split(" ", ",","，")
         if (list.size != 6) {
             return 1
         }
         var n = 0
         val list2: MutableList<Int> = mutableListOf<Int>()
-        for (i in 1..6) {
-            for (j in 1..list[i - 1].toInt()) {
+        for (i in 1 .. 6) {
+            for (j in 1..list[i-1].toInt()) {
                 list2.add(i)
                 n++
             }
         }
-        if (n > 18 || n < 5) {
+        if (n > 18 || n < 4) {
             return 2
         }
         if (list2[0] > n / 2) {
             return 3
         }
-        this.detail = Detail(n, 0)
+        this.detail = Detail(n, 1)
         this.roles = list2
         return 4
     }

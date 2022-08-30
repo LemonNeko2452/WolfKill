@@ -70,9 +70,9 @@ object GameRestart : SimpleCommand(
         val listener: CompletableJob = globalEventChannel().subscribeAlways<GroupMessageEvent> { event ->
             val flagG = group.id == thisGroup
             val flagM1 =
-                message.contentToString().startsWith("1") or message.contentToString().startsWith("标准")
+                (message.contentToString() == "1") or (message.contentToString() == "标准")
             val flagM2 =
-                message.contentToString().startsWith("2") or message.contentToString().startsWith("自定义")
+                (message.contentToString() == "2") or (message.contentToString() == "自定义")
             val flagI = sender.id == thisId
             if (flagG and flagM1 and flagI) {
                 WolfKillRoom.rooms.forEach {
@@ -107,7 +107,7 @@ object GameRestart : SimpleCommand(
                     }
 
                     2 -> {
-                        sendMessage("游戏人数过多，请重新开始游戏并控制人数在5~18人")
+                        sendMessage("游戏人数超出限制，请重新开始游戏并控制人数在4~18人")
                     }
 
                     3 -> {
