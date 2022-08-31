@@ -46,3 +46,5 @@
 ![img_4](https://lemon-neko.oss-cn-beijing.aliyuncs.com/img/img_4.png)
 ### 开始游戏
 ![img_6](https://lemon-neko.oss-cn-beijing.aliyuncs.com/img/img_6.png)
+### 停止游戏
+使用game-stop将结束整局游戏

@@ -29,7 +29,6 @@ object GameStart : SimpleCommand(
     @ExperimentalCommandDescriptors
     override val prefixOptional = true
 
-
     @ConsoleExperimentalApi
     @Handler
 
@@ -65,7 +64,11 @@ object GameStart : SimpleCommand(
                 flagx = true
 
             } else if (flagG and flagM2 and flagI) {
-
+                sendMessage("你选择了自定义模式")
+                sendMessage("请依次输入各职业数目（狼人、村民、预言家、猎人、女巫、白痴）")
+                sendMessage("示例:")
+                sendMessage("3,2,1,1,1,0")
+                sendMessage("将创建一个包含3名狼人、2名村民、1名预言家、1名猎人、1名女巫、0名白痴的8人游戏房间")
                 val s = nextMessage(60000).filterIsInstance<PlainText>()[0].toString()
                 var result = 0
                 WolfKillRoom.rooms.forEach {
@@ -94,12 +97,6 @@ object GameStart : SimpleCommand(
                         sendMessage("请输入 join-game 加入游戏")
                     }
                 }
-
-                sendMessage("你选择了自定义模式")
-                sendMessage("请依次输入各职业数目（狼人、村民、预言家、猎人、女巫、白痴）")
-                sendMessage("示例:")
-                sendMessage("3,2,1,1,1,0")
-                sendMessage("将创建一个包含3名狼人、2名村民、1名预言家、1名猎人、1名女巫、0名白痴的8人游戏房间")
                 flagx = true
             }
         }
