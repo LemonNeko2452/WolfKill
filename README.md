@@ -12,11 +12,13 @@
 
 目的是让指令能够在聊天环境下执行
 ### 启动前
+> 默认不会给非好友发送图片，以降低风险。可以在config配置中更改
+
 使用本插件前，需要将[图片压缩包](https://github.com/LemonNeko2452/WolfKill/blob/master/img.zip)解压，然后将其中的img文件夹放入mcl根目录下的data文件夹内，
 文件夹内的图片可以更改，但是要保证文件名不变
 
 ### 加载
-将在[Releases](https://github.com/LemonNeko2452/WolfKill/releases/tag/0.1.0)中下载的jar文件直接放入mcl根目录的plugins文件夹 
+将在[Releases](https://github.com/LemonNeko2452/WolfKill/releases/)中下载的jar文件直接放入mcl根目录的plugins文件夹 
 
 ### 第一次启动后
 由于本插件大量使用指令来完成交互，因此必须给所有人使用命令的权限
@@ -27,7 +29,7 @@
 ```
 
 ## 下载
-[Releases](https://github.com/LemonNeko2452/WolfKill/releases/tag/0.1.0)
+[Releases](https://github.com/LemonNeko2452/WolfKill/releases/)
 
 ## 命令别名
 
@@ -48,3 +50,6 @@
 ![img_6](https://lemon-neko.oss-cn-beijing.aliyuncs.com/img/img_6.png)
 ### 停止游戏
 使用game-stop将结束整局游戏
+### 退出游戏
+使用game-quit将退出本房间的游戏
+

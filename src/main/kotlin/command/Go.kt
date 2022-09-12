@@ -1,12 +1,14 @@
 package work.anqi.command
 
 
+import net.mamoe.mirai.console.command.BuiltInCommands.AutoLoginCommand.add
 import net.mamoe.mirai.console.command.CommandSenderOnMessage
 import net.mamoe.mirai.console.command.SimpleCommand
 import net.mamoe.mirai.console.command.descriptor.ExperimentalCommandDescriptors
 import net.mamoe.mirai.console.command.getGroupOrNull
 import net.mamoe.mirai.console.util.ConsoleExperimentalApi
 import net.mamoe.mirai.contact.getMember
+import net.mamoe.mirai.contact.isFriend
 import net.mamoe.mirai.message.data.Image
 import net.mamoe.mirai.message.data.buildMessageChain
 import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
@@ -18,6 +20,7 @@ import work.anqi.data.ROOMS
 
 import work.anqi.data.Role
 import java.io.File
+import java.lang.module.Configuration
 
 
 object Go : SimpleCommand(
@@ -113,14 +116,33 @@ object Go : SimpleCommand(
                 else -> File("data/img/error.jpg").toExternalResource()
 
             }
-            val chain = buildMessageChain {
+            val chain1 = buildMessageChain {
                 +"你的身份是\n"
                 +Image(fromEvent.sender.uploadImage(img).imageId)
                 +"\n"
                 +rolename
             }
+            val chain2 = buildMessageChain {
+                +"你的身份是"
+                +rolename
+            }
             try {
-                fromEvent.sender.bot.getGroup(groupId as Long)?.getMember(it.id)?.sendMessage(chain)
+                val objnumber = fromEvent.sender.bot.getGroup(groupId as Long)?.getMember(it.id)
+                if(CommandConfig.SendImgLevel==0){
+                    objnumber?.sendMessage(chain2)
+                }
+                else if(CommandConfig.SendImgLevel==2){
+                    objnumber?.sendMessage(chain1)
+                }
+                else {
+                    if (objnumber?.isFriend == true) {
+                        objnumber?.sendMessage(chain1)
+                    }
+                    else{
+                        objnumber?.sendMessage(chain2)
+                    }
+                }
+
             } catch (t: Throwable) {
                 sendMessage("请允许群成员发起临时会话")
                 sendMessage(t.toString())

@@ -42,6 +42,7 @@ object WolfKill : KotlinPlugin(
         Witch.register()
         Vote.register()
         Shoot.register()
+        GameQuit.register()
         logger.info { "狼人杀命令已注册" }
     }
 
@@ -342,6 +343,7 @@ object WolfKill : KotlinPlugin(
         Witch.unregister()
         Vote.unregister()
         Shoot.unregister()
+        GameQuit.unregister()
         logger.info("狼人杀插件已卸载")
     }
 }
