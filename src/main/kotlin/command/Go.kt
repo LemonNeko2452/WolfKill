@@ -1,7 +1,7 @@
 package work.anqi.command
 
 
-import net.mamoe.mirai.console.command.BuiltInCommands.AutoLoginCommand.add
+import kotlinx.coroutines.delay
 import net.mamoe.mirai.console.command.CommandSenderOnMessage
 import net.mamoe.mirai.console.command.SimpleCommand
 import net.mamoe.mirai.console.command.descriptor.ExperimentalCommandDescriptors
@@ -20,7 +20,6 @@ import work.anqi.data.ROOMS
 
 import work.anqi.data.Role
 import java.io.File
-import java.lang.module.Configuration
 
 
 object Go : SimpleCommand(
@@ -136,7 +135,7 @@ object Go : SimpleCommand(
                 }
                 else {
                     if (objnumber?.isFriend == true) {
-                        objnumber?.sendMessage(chain1)
+                        objnumber.sendMessage(chain1)
                     }
                     else{
                         objnumber?.sendMessage(chain2)
@@ -149,6 +148,7 @@ object Go : SimpleCommand(
             }
             list.removeAt(i)
             thisRoom.detail?.running = true
+            delay(2000)
         }
 
 //        开始
