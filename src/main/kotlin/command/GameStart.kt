@@ -47,9 +47,9 @@ object GameStart : SimpleCommand(
         val listener: CompletableJob = globalEventChannel().subscribeAlways<GroupMessageEvent> { event ->
             val flagG = group.id == thisGroup
             val flagM1 =
-                message.contentToString().startsWith("1") or message.contentToString().startsWith("标准")
+                (message.contentToString() == "1") or (message.contentToString() == "标准")
             val flagM2 =
-                message.contentToString().startsWith("2") or message.contentToString().startsWith("自定义")
+                (message.contentToString() == "2") or (message.contentToString() == "自定义")
             val flagI = sender.id == thisId
             if (flagG and flagM1 and flagI) {
                 WolfKillRoom.rooms.forEach {
