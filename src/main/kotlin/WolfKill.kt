@@ -135,7 +135,7 @@ object WolfKill : KotlinPlugin(
                                             +"使用命令 【look 编号】 即可\n"
                                         }
                                         group?.getMember(it.id)?.sendMessage(yTip)
-                                        delay(3000)
+                                        delay(2000)
                                         flag = true
                                     }
                                 }
@@ -144,6 +144,7 @@ object WolfKill : KotlinPlugin(
                                 } else {
                                     detail.section += 1
                                 }
+                                delay(5000)
                             }
 
                             4 -> {
@@ -169,7 +170,7 @@ object WolfKill : KotlinPlugin(
                                             }
                                             group?.getMember(it.id)?.sendMessage(nTip)
                                         }
-                                        delay(3000)
+                                        delay(2000)
                                         flag = true
                                     }
                                 }
@@ -178,6 +179,7 @@ object WolfKill : KotlinPlugin(
                                 } else {
                                     detail.section += 1
                                 }
+                                delay(5000)
                             }
 
                             5 -> {

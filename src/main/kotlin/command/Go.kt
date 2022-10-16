@@ -147,9 +147,9 @@ object Go : SimpleCommand(
                 sendMessage(t.toString())
             }
             list.removeAt(i)
-            thisRoom.detail?.running = true
             delay(2000)
         }
+        thisRoom.detail?.running = true
 
 //        开始
         val beginMsg = buildMessageChain {
