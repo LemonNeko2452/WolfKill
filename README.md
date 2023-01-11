@@ -16,6 +16,7 @@
 
 使用本插件前，需要将[图片压缩包](https://github.com/LemonNeko2452/WolfKill/blob/master/img.zip)解压，然后将其中的img文件夹放入mcl根目录下的data文件夹内，
 文件夹内的图片可以更改，但是要保证文件名不变
+![image-20230111142439385](https://lemon-neko.oss-cn-beijing.aliyuncs.com/img/image-20230111142439385.png)
 
 ### 加载
 将在[Releases](https://github.com/LemonNeko2452/WolfKill/releases/)中下载的jar文件直接放入mcl根目录的plugins文件夹 

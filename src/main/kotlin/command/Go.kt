@@ -105,27 +105,26 @@ object Go : SimpleCommand(
                 6 -> "白痴"
                 else -> "错误身份"
             }
-            val img = when (list[i]) {
-                1 -> File("data/img/langren.jpg").toExternalResource()
-                2 -> File("data/img/cunmin.jpg").toExternalResource()
-                3 -> File("data/img/yuyanjia.jpg").toExternalResource()
-                4 -> File("data/img/lieren.jpg").toExternalResource()
-                5 -> File("data/img/nvwu.jpg").toExternalResource()
-                6 -> File("data/img/baichi.jpg").toExternalResource()
-                else -> File("data/img/error.jpg").toExternalResource()
-
-            }
-            val chain1 = buildMessageChain {
-                +"你的身份是\n"
-                +Image(fromEvent.sender.uploadImage(img).imageId)
-                +"\n"
-                +rolename
-            }
-            val chain2 = buildMessageChain {
-                +"你的身份是"
-                +rolename
-            }
-            try {
+            try{
+                val img = when (list[i]) {
+                    1 -> File("data/img/langren.jpg").toExternalResource()
+                    2 -> File("data/img/cunmin.jpg").toExternalResource()
+                    3 -> File("data/img/yuyanjia.jpg").toExternalResource()
+                    4 -> File("data/img/lieren.jpg").toExternalResource()
+                    5 -> File("data/img/nvwu.jpg").toExternalResource()
+                    6 -> File("data/img/baichi.jpg").toExternalResource()
+                    else -> File("data/img/error.jpg").toExternalResource()
+                }
+                val chain1 = buildMessageChain {
+                    +"你的身份是\n"
+                    +Image(fromEvent.sender.uploadImage(img).imageId)
+                    +"\n"
+                    +rolename
+                }
+                val chain2 = buildMessageChain {
+                    +"你的身份是"
+                    +rolename
+                }
                 val objnumber = fromEvent.sender.bot.getGroup(groupId as Long)?.getMember(it.id)
                 if(CommandConfig.SendImgLevel==0){
                     objnumber?.sendMessage(chain2)
@@ -141,13 +140,15 @@ object Go : SimpleCommand(
                         objnumber?.sendMessage(chain2)
                     }
                 }
-
-            } catch (t: Throwable) {
-                sendMessage("请允许群成员发起临时会话")
+            }catch (t: Throwable){
+                sendMessage("发生异常，请尝试：")
+                sendMessage("·允许群成员发起临时会话")
+                sendMessage("·确保将img.zip解压至/data/目录下")
+                sendMessage("异常内容：")
                 sendMessage(t.toString())
             }
             list.removeAt(i)
-            delay(2000)
+            delay(1000)
         }
         thisRoom.detail?.running = true
 

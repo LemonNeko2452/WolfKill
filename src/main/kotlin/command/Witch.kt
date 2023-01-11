@@ -44,7 +44,9 @@ object Witch : SimpleCommand(
         goods.forEach {
             if (it.role.id == 5) {
                 if (it.id == fromEvent.sender.id) {
-                    println(code)
+                    if(it.role.flag_action){
+                        return
+                    }
                     when (code) {
                         "save" -> {
                             if (it.role.healing_potion < 1) {
@@ -54,6 +56,7 @@ object Witch : SimpleCommand(
                             }
                             thisRoom.will_dea = 0
                             it.role.healing_potion -= 1
+                            it.role.flag_action = true
                         }
 
                         "skip" -> {
@@ -73,10 +76,10 @@ object Witch : SimpleCommand(
                             it.role.flag_action = true
                         }
                     }
-                    if (!it.role.flag_action) {
-                        flag_all_act = false
-                    }
                 }
+            }
+            if (!it.role.flag_action) {
+                flag_all_act = false
             }
         }
         if (flag_all_act) {

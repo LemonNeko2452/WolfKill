@@ -93,7 +93,6 @@ object WolfKill : KotlinPlugin(
                                 group?.sendMessage("天黑请闭眼")
                                 detail.section += 1
                             }
-
                             2 -> {
                                 logger.info { "狼人行动阶段" }
                                 detail.act = true
@@ -125,7 +124,6 @@ object WolfKill : KotlinPlugin(
 
                             3 -> {
                                 logger.info { "预言家行动阶段" }
-                                var flag = false
                                 group?.sendMessage("预言家请睁眼")
                                 rooms.goods.forEach {
                                     if (it.role.id == 3) {
@@ -135,21 +133,13 @@ object WolfKill : KotlinPlugin(
                                             +"使用命令 【look 编号】 即可\n"
                                         }
                                         group?.getMember(it.id)?.sendMessage(yTip)
-                                        delay(2000)
-                                        flag = true
                                     }
                                 }
-                                if (flag) {
-                                    detail.act = true
-                                } else {
-                                    detail.section += 1
-                                }
-                                delay(5000)
+                                delay(4000)
                             }
 
                             4 -> {
                                 logger.info { "女巫行动阶段" }
-                                var flag = false
                                 group?.sendMessage("女巫请睁眼")
                                 rooms.goods.forEach {
                                     if (it.role.id == 5) {
@@ -170,16 +160,9 @@ object WolfKill : KotlinPlugin(
                                             }
                                             group?.getMember(it.id)?.sendMessage(nTip)
                                         }
-                                        delay(2000)
-                                        flag = true
                                     }
                                 }
-                                if (flag) {
-                                    detail.act = true
-                                } else {
-                                    detail.section += 1
-                                }
-                                delay(5000)
+                                delay(4000)
                             }
 
                             5 -> {
@@ -210,9 +193,6 @@ object WolfKill : KotlinPlugin(
                                     for (i in rooms.members) {
                                         if (i.id in rooms.witch_kill) {
                                             list_dea += i.toString() + "\n"
-                                            if (i.role.id == 4) {
-                                                rooms.dead_hunter.add(i)
-                                            }
                                         }
                                     }
                                     // 夜晚死亡
@@ -224,31 +204,31 @@ object WolfKill : KotlinPlugin(
                                     rooms.witch_kill.forEach { deaId ->
                                         rooms.kill(deaId)
                                     }
-                                    rooms.init_room()
                                 }
                                 detail.section += 1
                             }
 
-                            6 -> {
+                            6,9-> {
                                 logger.info { "猎人被杀时" }
-                                var flag = false
-                                rooms.dead_hunter.forEach {
-                                    val hTip = buildMessageChain {
-                                        +At(it.id)
-                                        +"请发动技能，射击一名角色：\n"
-                                        +list_member
-                                        +"使用命令 【shoot 编号】表示射击某人\n"
-                                        +"shoot 0 表示不射击\n"
+                                rooms.goods.forEach {
+                                    if(rooms.will_dea == it.id){
+                                        if(it.role.id == 4){
+                                            group?.sendMessage("猎人死亡，请等待10秒")
+                                            val hTip = buildMessageChain {
+                                                +At(it.id)
+                                                +"请发动技能，射击一名角色：\n"
+                                                +list_member
+                                                +"使用命令 【shoot 编号】表示射击某人\n"
+                                                +"shoot 0 表示不射击\n"
+                                                +"你有10秒钟的时间来决定\n"
+                                            }
+                                            group?.getMember(it.id)?.sendMessage(hTip)
+                                            delay(10000)
+                                        }
                                     }
-                                    group?.sendMessage(hTip)
-                                    delay(3000)
-                                    flag = true
                                 }
-                                if (flag) {
-                                    detail.act = true
-                                } else {
-                                    detail.section += 1
-                                }
+                                detail.section += 1
+                                rooms.init_room()
                             }
 
                             7 -> {
@@ -287,31 +267,9 @@ object WolfKill : KotlinPlugin(
                                     rooms.kill(rooms.will_dea)
                                     val zTip = buildMessageChain {
                                         +dead
-                                        +" 出局"
+                                        +" 出局，你可以留下遗言"
                                     }
                                     group?.sendMessage(zTip)
-                                }
-                            }
-
-                            9 -> {
-                                logger.info { "猎人被票时" }
-                                var flag = false
-                                rooms.dead_hunter.forEach {
-                                    flag = true
-                                    val hTip = buildMessageChain {
-                                        +At(it.id)
-                                        +"请发动技能，射击一名角色：\n"
-                                        +list_member
-                                        +"使用命令 【shoot 编号】表示射击某人\n"
-                                        +"shoot 0 表示不射击\n"
-                                    }
-                                    delay(3000)
-                                    group?.sendMessage(hTip)
-                                }
-                                if (flag) {
-                                    detail.act = true
-                                } else {
-                                    detail.section += 1
                                 }
                             }
 

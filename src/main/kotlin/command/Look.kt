@@ -57,6 +57,9 @@ object Look : SimpleCommand(
         var flag_all_act = true
         goods.forEach {
             if (it.role.id == 3) {
+                if(it.role.flag_action){
+                    return
+                }
                 if (it.id == fromEvent.sender.id) {
                     fromEvent.sender.bot.getGroup(roomId)?.getMember(fromEvent.sender.id)?.sendMessage(yTip)
                     it.role.flag_action = true
@@ -64,6 +67,7 @@ object Look : SimpleCommand(
                 if (!it.role.flag_action) {
                     flag_all_act = false
                 }
+
             }
         }
         if (flag_all_act) {

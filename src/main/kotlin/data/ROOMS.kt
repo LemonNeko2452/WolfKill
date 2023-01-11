@@ -13,7 +13,6 @@ class ROOMS {
     var roles: MutableList<Int> = mutableListOf<Int>()
     var wolfs: MutableList<Members> = mutableListOf<Members>()
     var goods: MutableList<Members> = mutableListOf<Members>()
-    var dead_hunter: MutableList<Members> = mutableListOf<Members>()
     var will_dea = 0L
     var witch_kill: MutableList<Long> = mutableListOf<Long>()
     var game_over = false
