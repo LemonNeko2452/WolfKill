@@ -14,6 +14,7 @@ class ROOMS {
     var wolfs: MutableList<Members> = mutableListOf<Members>()
     var goods: MutableList<Members> = mutableListOf<Members>()
     var will_dea = 0L
+    var will_dea_name = ""
     var witch_kill: MutableList<Long> = mutableListOf<Long>()
     var game_over = false
     val timestamp = Date().time
@@ -63,6 +64,7 @@ class ROOMS {
                 max = v.size
                 if (k > 0) {
                     this.will_dea = this.members[k - 1].id
+                    this.will_dea_name = this.members[k - 1].name
                 }
             }
         }
@@ -88,6 +90,7 @@ class ROOMS {
     fun init_room() {
         this.witch_kill.clear()
         this.will_dea = 0L
+        this.will_dea_name = ""
         this.wolfs.forEach {
             it.role.flag_action = false
             it.role.kill_target = 0

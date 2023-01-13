@@ -60,7 +60,6 @@ object WolfKill : KotlinPlugin(
                 try{
                     for (rooms in WolfKillRoom.rooms) {
                         val detail = rooms.detail
-                        if (detail?.act == true) continue
                         val bot = Bot.instances[0].bot
                         val group = bot.getGroup(rooms.room)
                         if (!rooms.game_over && rooms.detail?.running==true) {
@@ -83,6 +82,7 @@ object WolfKill : KotlinPlugin(
                                 break
                             }
                         }
+                        if (detail?.act == true) continue
                         var list_member = ""
                         for (i in 1..rooms.members.size) {
                             list_member += "" + i + " " + rooms.members[i - 1].toString() + "\n"
@@ -95,7 +95,6 @@ object WolfKill : KotlinPlugin(
                             }
                             2 -> {
                                 logger.info { "狼人行动阶段" }
-                                detail.act = true
                                 group?.sendMessage("狼人请睁眼")
                                 if (detail.rounds == 1) {
                                     var wolfString = ""
@@ -120,6 +119,7 @@ object WolfKill : KotlinPlugin(
                                 rooms.wolfs.forEach {
                                     group?.getMember(it.id)?.sendMessage(wolfTip)
                                 }
+                                detail.act = true
                             }
 
                             3 -> {
@@ -135,7 +135,8 @@ object WolfKill : KotlinPlugin(
                                         group?.getMember(it.id)?.sendMessage(yTip)
                                     }
                                 }
-                                delay(4000)
+                                detail.act = true
+                                delay(3000)
                             }
 
                             4 -> {
@@ -146,15 +147,15 @@ object WolfKill : KotlinPlugin(
                                         if (rooms.will_dea != 0L && it.role.healing_potion > 0) {
                                             val nTip = buildMessageChain {
                                                 +"今晚 "
-                                                +rooms.members[rooms.will_dea.toInt()].toString()
+                                                +rooms.will_dea_name
                                                 +" 被杀\n"
-                                                +"使用命令【witch save】拯救ta或是使用指令【witch skip】跳过"
+                                                +"使用命令【witch save】拯救ta"
                                             }
                                             group?.getMember(it.id)?.sendMessage(nTip)
                                         }
                                         if (it.role.death_potion > 0) {
                                             val nTip = buildMessageChain {
-                                                +"可刀角色：\n"
+                                                +"可毒角色：\n"
                                                 +list_member
                                                 +"使用命令【witch 编号】使用毒药或是使用指令【witch skip】跳过"
                                             }
@@ -162,7 +163,8 @@ object WolfKill : KotlinPlugin(
                                         }
                                     }
                                 }
-                                delay(4000)
+                                detail.act = true
+                                delay(3000)
                             }
 
                             5 -> {
@@ -175,7 +177,7 @@ object WolfKill : KotlinPlugin(
                                         }
                                     }
                                     val godMsg = buildMessageChain {
-                                        +"猎人或白痴：\n"
+                                        +"你的队友（身份是猎人或白痴）：\n"
                                         +godString
                                     }
                                     rooms.goods.forEach {
@@ -233,7 +235,6 @@ object WolfKill : KotlinPlugin(
 
                             7 -> {
                                 logger.info { "发言阶段" }
-                                detail.act = true
                                 val kTip = buildMessageChain {
                                     +"请按照以下顺序发言\n"
                                     +list_member
@@ -241,11 +242,11 @@ object WolfKill : KotlinPlugin(
                                     +"vote 0 表示不投票\n"
                                 }
                                 group?.sendMessage(kTip)
+                                detail.act = true
                             }
 
                             8 -> {
                                 logger.info { "投票结束" }
-                                detail.section += 1
                                 var flag = false
                                 rooms.goods.forEach {
                                     if (it.role.id == 6 && it.id == rooms.will_dea) {
@@ -257,20 +258,16 @@ object WolfKill : KotlinPlugin(
                                 } else if (flag) {
                                     group?.sendMessage("被投票者身份为白痴，无法投票出局")
                                 } else {
-                                    var dead = ""
-                                    for (i in rooms.members) {
-                                        if (i.id == rooms.will_dea) {
-                                            dead = i.toString()
-                                        }
-                                    }
                                     // 投票死亡
                                     rooms.kill(rooms.will_dea)
                                     val zTip = buildMessageChain {
-                                        +dead
-                                        +" 出局，你可以留下遗言"
+                                        +rooms.will_dea_name
+                                        +" 出局，你可以留下遗言(30秒时间)"
                                     }
                                     group?.sendMessage(zTip)
+                                    delay(30000)
                                 }
+                                detail.section += 1
                             }
 
                             10 -> {

@@ -40,47 +40,51 @@ object Witch : SimpleCommand(
         goods = thisRoom.goods
         all_member = thisRoom.members
         val roomId = thisRoom.room
+
+
+
         var flag_all_act = true
         goods.forEach {
             if (it.role.id == 5) {
                 if (it.id == fromEvent.sender.id) {
-                    if(it.role.flag_action){
-                        return
-                    }
-                    when (code) {
-                        "save" -> {
-                            if (it.role.healing_potion < 1) {
-                                fromEvent.sender.bot.getGroup(roomId)?.getMember(fromEvent.sender.id)
-                                    ?.sendMessage("治疗药水数量不足")
-                                return
+                    if (!it.role.flag_action) {
+                        when (code) {
+                            "save" -> {
+                                if (it.role.healing_potion < 1) {
+                                    fromEvent.sender.bot.getGroup(roomId)?.getMember(fromEvent.sender.id)
+                                        ?.sendMessage("治疗药水数量不足")
+                                } else {
+                                    thisRoom.will_dea = 0L
+                                    it.role.healing_potion -= 1
+                                    it.role.flag_action = true
+                                }
                             }
-                            thisRoom.will_dea = 0
-                            it.role.healing_potion -= 1
-                            it.role.flag_action = true
-                        }
 
-                        "skip" -> {
-                            it.role.flag_action = true
-                        }
+                            "skip" -> {
+                                it.role.flag_action = true
+                            }
 
-                        else -> {
-                            if (all_member.size < code.toInt() || code.toInt() < 1) {
-                                sendMessage("参数超出范围")
-                                return
+                            else -> {
+                                if (all_member.size < code.toInt() || code.toInt() < 1) {
+                                    sendMessage("参数超出范围")
+                                }
+                                else{
+                                    val id = thisRoom.members[code.toInt() - 1].id
+                                    if (id !in thisRoom.witch_kill) {
+                                        thisRoom.witch_kill.add(id)
+                                    }
+                                    it.role.healing_potion -= 1
+                                    it.role.flag_action = true
+                                }
                             }
-                            val id = thisRoom.members[code.toInt() - 1].id
-                            if (id !in thisRoom.witch_kill) {
-                                thisRoom.witch_kill.add(id)
-                            }
-                            it.role.healing_potion -= 1
-                            it.role.flag_action = true
                         }
                     }
                 }
+                if (!it.role.flag_action) {
+                    flag_all_act = false
+                }
             }
-            if (!it.role.flag_action) {
-                flag_all_act = false
-            }
+
         }
         if (flag_all_act) {
 //            fromEvent.sender.bot.getGroup(roomId)?.sendMessage("女巫请闭眼")
