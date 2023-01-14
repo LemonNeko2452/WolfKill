@@ -78,6 +78,7 @@ class ROOMS {
                 max = v.size
                 if (k > 0) {
                     this.will_dea = this.members[k - 1].id
+                    this.will_dea_name = this.members[k - 1].name
                 }
             }
         }

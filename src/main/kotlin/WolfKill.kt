@@ -123,10 +123,13 @@ object WolfKill : KotlinPlugin(
                             }
 
                             3 -> {
+
                                 logger.info { "预言家行动阶段" }
                                 group?.sendMessage("预言家请睁眼")
+                                var flag_skip = true
                                 rooms.goods.forEach {
                                     if (it.role.id == 3) {
+                                        flag_skip = false
                                         val yTip = buildMessageChain {
                                             +"可查角色：\n"
                                             +list_member
@@ -137,13 +140,19 @@ object WolfKill : KotlinPlugin(
                                 }
                                 detail.act = true
                                 delay(3000)
+                                if(flag_skip){
+                                    detail.section +=1
+                                    detail.act = false
+                                }
                             }
 
                             4 -> {
                                 logger.info { "女巫行动阶段" }
                                 group?.sendMessage("女巫请睁眼")
+                                var flag_skip = true
                                 rooms.goods.forEach {
                                     if (it.role.id == 5) {
+                                        flag_skip = false
                                         if (rooms.will_dea != 0L && it.role.healing_potion > 0) {
                                             val nTip = buildMessageChain {
                                                 +"今晚 "
@@ -165,6 +174,10 @@ object WolfKill : KotlinPlugin(
                                 }
                                 detail.act = true
                                 delay(3000)
+                                if(flag_skip){
+                                    detail.section += 1
+                                    detail.act = false
+                                }
                             }
 
                             5 -> {
@@ -256,7 +269,7 @@ object WolfKill : KotlinPlugin(
                                 if (rooms.will_dea == 0L) {
                                     group?.sendMessage("没有人被投票，游戏继续")
                                 } else if (flag) {
-                                    group?.sendMessage("被投票者身份为白痴，无法投票出局")
+                                    group?.sendMessage(rooms.will_dea_name+"身份为白痴，无法投票出局")
                                 } else {
                                     // 投票死亡
                                     rooms.kill(rooms.will_dea)
@@ -272,6 +285,7 @@ object WolfKill : KotlinPlugin(
 
                             10 -> {
                                 logger.info { "回合结束" }
+                                rooms.init_room()
                                 detail.rounds += 1
                                 detail.section = 1
                             }
