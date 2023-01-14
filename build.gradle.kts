@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "work.anqi"
-version = "0.1.9"
+version = "0.1.10"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
